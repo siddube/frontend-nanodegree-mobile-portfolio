@@ -424,7 +424,7 @@ var resizePizzas = function(size) {
    // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
   function determineDx (elem, size) {
     var oldWidth = elem.offsetWidth;
-    var windowWidth = document.querySelector("#randomPizzas").offsetWidth;
+    var windowWidth = document.getElementById("#randomPizzas").offsetWidth;
     var oldSize = oldWidth / windowWidth;
 
     // Optional TODO: change to 3 sizes? no more xl?
@@ -465,7 +465,7 @@ var resizePizzas = function(size) {
         console.log('Error in Size Switching');
      }
       
-     var randomPizza =  document.querySelectorAll(".randomPizzaContainer");  
+     var randomPizza =  document.getElementsByClassName(".randomPizzaContainer");  
      for (var i = 0; i < randomPizza.length; i++) {
      randomPizza[i].style.width = newWidth + "%";
     }
@@ -518,8 +518,9 @@ function updatePositions() {
 
   var items = document.querySelectorAll('.mover');
   var scrollTop = document.body.scrollTop;
+  var phase;    
   for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((scrollTop / 1250) + (i % 5));
+    phase = Math.sin((scrollTop / 1250) + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
 
@@ -540,9 +541,11 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  //Reduce Pizza elements from 200 to 20    
-  for (var i = 0; i < 20; i++) {
-    var elem = document.createElement('img');
+  //Calculate Rows based on browser window height
+  var rows = parseInt(window.innerHeight / 200);
+  var elem;    
+  for (var i = 0; i < rows * cols ; i++) {
+    elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
